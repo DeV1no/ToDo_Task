@@ -8,11 +8,13 @@ public class UnitOfWork : IUnitOfWork, IDisposable
 {
     private readonly ApplicationDbContext _context;
     public ITaskRepository TaskRepository { get; private set; }
+    public IUserRepository UserRepository { get; private set; }
 
     public UnitOfWork(ApplicationDbContext context)
     {
         _context = context;
         TaskRepository = new TaskRepository(_context);
+        UserRepository = new UserRepository(_context);
 
     }
 

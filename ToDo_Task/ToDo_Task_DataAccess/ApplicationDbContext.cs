@@ -15,7 +15,9 @@ public class ApplicationDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         new TasksConfiguration(modelBuilder.Entity<Tasks>());
+        new UserConfiguration(modelBuilder.Entity<User>());
     }
 
     public virtual DbSet<Tasks> Tasks { get; set; }
+    public virtual DbSet<User> Users { get; set; }
 }
