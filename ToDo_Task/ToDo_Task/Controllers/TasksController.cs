@@ -15,9 +15,9 @@ public class TasksController:ControllerBase
         _taskService = taskService;
       
     }
-    [HttpGet]
-    public async Task<IActionResult> GetAllTasks() 
-        => Ok(await _taskService.GetAllTasks());
+    [HttpGet()]
+    public async Task<IActionResult> GetAllTasks([FromQuery] string? userCreator) 
+        => Ok(await _taskService.GetAllTasks(userCreator));
     [HttpGet("{id}")]
     public async Task<IActionResult> GetTask(int id)
         => Ok(await _taskService.GetTaskById(id));

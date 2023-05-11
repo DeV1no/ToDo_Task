@@ -26,9 +26,9 @@ public class TaskService : ITaskService
     }
 
 
-    public async Task<List<TaskListDto>> GetAllTasks()
+    public async Task<List<TaskListDto>> GetAllTasks(string? userName)
     {
-        var tasksList = await _unitOfWork.TaskRepository.All();
+        var tasksList = await _unitOfWork.TaskRepository.All(userName);
         return _mapper.Map<List<Tasks>, List<TaskListDto>>(tasksList);
     }
 
@@ -44,7 +44,7 @@ public class TaskService : ITaskService
     {
 
         var task = _mapper.Map<Tasks>(taskSaveDto);
-        var userId = Convert.ToInt32(_httpContextAccessor.HttpContext.User.Identities.First().Name);
+        var userId = Convert.ToInt32(_httpContextAccessor.HttpContext!.User.Identities.First().Name);
         task.UserId = userId;
         var user =await _unitOfWork.UserRepository.GetUserById(userId);
         task.User = user;

@@ -9,7 +9,8 @@ public class TaskMappings : Profile
     public TaskMappings()
     {
         CreateMap<Tasks, TaskSaveDto>().ReverseMap();
-        CreateMap<Tasks, TaskListDto>();
+        CreateMap<Tasks, TaskListDto>()
+            .ForMember(x=>x.UserCreator,opt=>opt.MapFrom(q=>q.User.UserName));
 
     }
 }

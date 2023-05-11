@@ -15,8 +15,10 @@ public class TaskRepository : GenericRepository<Tasks>, ITaskRepository
 
 
 
-    public override async Task<List<Tasks>> All()
-        => await _dbSet.ToListAsync();
+    public async Task<List<Tasks>> All(string? userName)
+        => await _dbSet.Include(x=>x.User)
+            .Where(x=>userName == null || x.User.UserName==userName)
+            .ToListAsync();
 
    
     public override async Task<Tasks?> GetById(int id)
