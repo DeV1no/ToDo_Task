@@ -25,14 +25,14 @@ public class UserRepository : IUserRepository
         return true;
     }
 
-    public async Task<bool> Login(User user)
+    public async Task<User> Login(User user)
     {
         var userDb = await _context.Users
             .SingleOrDefaultAsync(x => x.UserName == user.UserName && x.PassWord == user.PassWord);
         if (userDb is null)
         {// throw new not
         }
-        return true;
+        return userDb!;
     }
 
     public async Task<User> GetUserById(int userId)

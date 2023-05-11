@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using ToDo_Task_Service.DataTransferObjects;
 using ToDo_Task_Service.IContracts;
 
@@ -9,10 +10,10 @@ namespace ToDo_Task.Controllers;
 public class TasksController:ControllerBase
 {
     private readonly ITaskService _taskService;
-
     public TasksController(ITaskService taskService)
     {
         _taskService = taskService;
+      
     }
     [HttpGet]
     public async Task<IActionResult> GetAllTasks() 
@@ -20,10 +21,13 @@ public class TasksController:ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetTask(int id)
         => Ok(await _taskService.GetTaskById(id));
+
     [Authorize]
     [HttpPost]
     public async Task<IActionResult> AddTask([FromBody] TaskSaveDto model)
         => Ok(await _taskService.AddTask(model));
+   
+       
     [Authorize]
     [HttpPut]
     public async Task<IActionResult> UpdateTask([FromBody] TaskSaveDto model)

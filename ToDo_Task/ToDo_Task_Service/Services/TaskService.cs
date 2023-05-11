@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using System;
+using System.Security.Claims;
+using ToDo_Task_DataAccess;
 using ToDo_Task_DataAccess.Entity;
 using ToDo_Task_Repository.IConfiguration;
 using ToDo_Task_Service.DataTransferObjects;
@@ -11,11 +14,15 @@ public class TaskService : ITaskService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
+    private readonly ApplicationDbContext _context;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public TaskService(IUnitOfWork unitOfWork, IMapper mapper)
+    public TaskService(IUnitOfWork unitOfWork, IMapper mapper, ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _context = context;
+        _httpContextAccessor = httpContextAccessor;
     }
 
 
@@ -35,7 +42,12 @@ public class TaskService : ITaskService
 
     public async Task<int> AddTask(TaskSaveDto taskSaveDto)
     {
+
         var task = _mapper.Map<Tasks>(taskSaveDto);
+        var userId = Convert.ToInt32(_httpContextAccessor.HttpContext.User.Identities.First().Name);
+        task.UserId = userId;
+        var user =await _unitOfWork.UserRepository.GetUserById(userId);
+        task.User = user;
         await _unitOfWork.TaskRepository.Add(task);
         return task.Id;
     }

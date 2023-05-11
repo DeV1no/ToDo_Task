@@ -1,4 +1,7 @@
-﻿namespace ToDo_Task_DataAccess.Entity;
+﻿
+using Microsoft.AspNetCore.Identity;
+
+namespace ToDo_Task_DataAccess.Entity;
 
 public class User
 {
@@ -6,5 +9,5 @@ public class User
     public string UserName { get; set; } = string.Empty;
     public string PassWord { get; set; } = string.Empty;
     // Relations
-    public virtual ICollection<Tasks> Tasks { get; set; }= new List<Tasks>();
+    public virtual ICollection<Tasks> Tasks { get; set; } = new List<Tasks>();
 }

@@ -33,8 +33,8 @@ public class UserService : IUserService
         var user = _mapper.Map<User>(userSaveDto);
       
 
-        await _unitOfWork.UserRepository.Login(user);
-        return  CreateToken(user);
+       var userdb= await _unitOfWork.UserRepository.Login(user);
+        return  CreateToken(userdb);
     }
 
     public async Task<User> GetById(int userId)
@@ -51,8 +51,11 @@ public class UserService : IUserService
         );
         var subject = new ClaimsIdentity(new[]
         {
+
             new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
             new Claim(JwtRegisteredClaimNames.Email, user.UserName),
+            new Claim(ClaimTypes.Name, user.Id.ToString()),
+            new Claim(ClaimTypes.UserData, user.Id.ToString())
         });
         var expires = DateTime.UtcNow.AddMinutes(10);
         var tokenDescriptor = new SecurityTokenDescriptor
