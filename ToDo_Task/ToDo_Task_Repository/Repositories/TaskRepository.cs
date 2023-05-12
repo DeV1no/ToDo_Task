@@ -40,12 +40,9 @@ public class TaskRepository : GenericRepository<Tasks>, ITaskRepository
     public async Task<bool> DoneTask(int taskId)
     {
         var task = await _dbSet.SingleOrDefaultAsync(x => x.Id == taskId);
-        if (task is null) throw new NotFoundException();
+        if (task is null) throw new Exception("TaskId Not Found");
         task.IsDone = true;
         await Update(task);
         return task.IsDone;
     }
-}
-public class NotFoundException : Exception
-{
 }

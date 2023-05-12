@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="DataTransferObjects\Users\" />
-    <Folder Include="Helper\" />
     <Folder Include="IContracts\" />
     <Folder Include="Services\" />
   </ItemGroup>

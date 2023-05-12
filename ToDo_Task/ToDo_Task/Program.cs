@@ -9,7 +9,7 @@ using ToDo_Task_Repository.IConfiguration;
 using ToDo_Task_Service.IContracts;
 using ToDo_Task_Service.Mappings;
 using ToDo_Task_Service.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -94,7 +94,14 @@ app.UseAuthentication();
 app.UseAuthorization();
 IConfiguration configuration = app.Configuration;
 IWebHostEnvironment environment = app.Environment;
-
+app.UseExceptionHandler(c => c.Run(async context =>
+{
+    var exception = context.Features
+        .Get<IExceptionHandlerPathFeature>()!
+        .Error;
+    var response = new { error = exception.Message };
+    await context.Response.WriteAsJsonAsync(response);
+}));
 app.MapControllers();
 
 app.Run();

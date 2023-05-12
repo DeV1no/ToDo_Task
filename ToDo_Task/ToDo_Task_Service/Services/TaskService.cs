@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using ToDo_Task_DataAccess;
 using ToDo_Task_DataAccess.Entity;
 using ToDo_Task_Repository.IConfiguration;
-using ToDo_Task_Repository.Repositories;
 using ToDo_Task_Service.DataTransferObjects;
 using ToDo_Task_Service.IContracts;
 
@@ -84,6 +83,6 @@ public class TaskService : ITaskService
     {
         var userId = GetTaskUserCreatorId();
         var isTaskExit = await _unitOfWork.TaskRepository.IsTaskExit(x => x.UserId == userId&& x.Id==taskId);
-        if (!isTaskExit) throw new NotFoundException();
+        if (!isTaskExit)  throw new Exception("TaskId Not Found");;
     }
 }
