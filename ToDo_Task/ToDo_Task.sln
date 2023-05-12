@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo_Task_Repository", "ToD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo_Task_Service", "ToDo_Task_Service\ToDo_Task_Service.csproj", "{BEF826C3-D973-4C2B-B022-020216831B0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo_Task_Tests", "ToDo_Task_Tests\ToDo_Task_Tests.csproj", "{C78514C0-4052-4032-8873-0699B1327949}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo_Task_Tests", "ToDo_Task_Tests\ToDo_Task_Tests.csproj", "{C78514C0-4052-4032-8873-0699B1327949}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{C95D9D3E-ABBE-4ED4-8A71-0BD55812E076}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{C78514C0-4052-4032-8873-0699B1327949}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C78514C0-4052-4032-8873-0699B1327949}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C78514C0-4052-4032-8873-0699B1327949}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C95D9D3E-ABBE-4ED4-8A71-0BD55812E076}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C95D9D3E-ABBE-4ED4-8A71-0BD55812E076}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C95D9D3E-ABBE-4ED4-8A71-0BD55812E076}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C95D9D3E-ABBE-4ED4-8A71-0BD55812E076}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

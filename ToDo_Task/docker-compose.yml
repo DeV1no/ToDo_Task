@@ -1,20 +1,18 @@
 version: '3.4'
 
 services:
-  mssql:
-        image: 'mcr.microsoft.com/mssql/server'
-        # container_name: mssql
-        # hostname: mssql
-        environment:
-         SA_PASSWORD: 'Pass123!'
-         ACCEPT_EULA: 'Y'
-        restart: unless-stopped
-        ports:
-        - '11433:1433'
   todo_task:
     image: ${DOCKER_REGISTRY-}todotask
     build:
       context: .
-      dockerfile: ToDo_Task\Dockerfile
-
-    
+      dockerfile: ToDo_Task/Dockerfile
+  mssql:
+    image: 'mcr.microsoft.com/mssql/server'
+    # container_name: mssql
+    # hostname: mssql
+    environment:
+      SA_PASSWORD: 'Pass123!'
+      ACCEPT_EULA: 'Y'
+    restart: unless-stopped
+    ports:
+      - '11433:1433'

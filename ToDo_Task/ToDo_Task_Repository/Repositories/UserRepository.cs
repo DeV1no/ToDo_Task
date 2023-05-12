@@ -29,9 +29,7 @@ public class UserRepository : IUserRepository
     {
         var userDb = await _context.Users
             .SingleOrDefaultAsync(x => x.UserName == user.UserName && x.PassWord == user.PassWord);
-        if (userDb is null)
-        {// throw new not
-        }
+        if (userDb == null) throw new Exception("UserNot Found");
         return userDb!;
     }
 
