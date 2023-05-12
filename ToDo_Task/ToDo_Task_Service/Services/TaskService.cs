@@ -83,6 +83,6 @@ public class TaskService : ITaskService
     {
         var userId = GetTaskUserCreatorId();
         var isTaskExit = await _unitOfWork.TaskRepository.IsTaskExit(x => x.UserId == userId&& x.Id==taskId);
-        if (!isTaskExit)  throw new Exception("TaskId Not Found");;
+        if (!isTaskExit)  throw new Exception("TaskId Not Found");
     }
 }

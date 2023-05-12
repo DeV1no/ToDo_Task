@@ -28,7 +28,7 @@ public class TaskRepository : GenericRepository<Tasks>, ITaskRepository
                    .FirstOrDefaultAsync(x => x.Id != id
                                              || !userCreatorId.HasValue 
                                              || x.UserId == userCreatorId)
-                ?? throw new NotFoundException();
+                ??  throw new Exception("TaskId Not Found");
     }
 
     public async Task<bool> IsTaskExit(Expression<Func<Tasks, bool>> condition)
