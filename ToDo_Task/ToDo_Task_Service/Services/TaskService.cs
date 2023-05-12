@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Security.Claims;
 using ToDo_Task_DataAccess;
 using ToDo_Task_DataAccess.Entity;
 using ToDo_Task_Repository.IConfiguration;
+using ToDo_Task_Repository.Repositories;
 using ToDo_Task_Service.DataTransferObjects;
 using ToDo_Task_Service.IContracts;
 
@@ -44,24 +43,47 @@ public class TaskService : ITaskService
     {
 
         var task = _mapper.Map<Tasks>(taskSaveDto);
-        var userId = Convert.ToInt32(_httpContextAccessor.HttpContext!.User.Identities.First().Name);
+        var userId = GetTaskUserCreatorId();
         task.UserId = userId;
-        var user =await _unitOfWork.UserRepository.GetUserById(userId);
+        var user = await _unitOfWork.UserRepository.GetUserById(userId);
         task.User = user;
         await _unitOfWork.TaskRepository.Add(task);
         return task.Id;
     }
 
+
+
     public async Task<bool> UpdateTask(TaskSaveDto taskSaveDto)
     {
+        await IsTaskExit(taskSaveDto.Id);
         var task = _mapper.Map<Tasks>(taskSaveDto);
         return await _unitOfWork.TaskRepository.Update(task);
     }
 
+    
+
     public async Task<bool> DoneTask(int taskId)
-        => await _unitOfWork.TaskRepository.DoneTask(taskId);
+    {
+        await IsTaskExit(taskId);
+        return  await _unitOfWork.TaskRepository.DoneTask(taskId);
+    }
+
 
 
     public async Task<bool> DeleteTask(int taskId)
-        => await _unitOfWork.TaskRepository.Delete(taskId);
+    {
+        await IsTaskExit(taskId);
+        return await _unitOfWork.TaskRepository.Delete(taskId);
+    }
+       
+
+
+    private int GetTaskUserCreatorId()
+    => Convert.ToInt32(_httpContextAccessor.HttpContext!.User.Identities.First().Name);
+    private async Task IsTaskExit( int taskId)
+    {
+        var userId = GetTaskUserCreatorId();
+        var isTaskExit = await _unitOfWork.TaskRepository.IsTaskExit(x => x.UserId == userId&& x.Id==taskId);
+        if (!isTaskExit) throw new NotFoundException();
+    }
 }

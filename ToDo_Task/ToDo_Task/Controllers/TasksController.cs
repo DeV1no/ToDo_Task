@@ -32,6 +32,7 @@ public class TasksController:ControllerBase
     [HttpPut]
     public async Task<IActionResult> UpdateTask([FromBody] TaskSaveDto model)
         => Ok(await _taskService.UpdateTask(model));
+    [Authorize]
     [HttpPut("DoneTask/{id:int}")]
     public async Task<IActionResult> DoneTask(int id)
         => Ok(await _taskService.DoneTask(id));

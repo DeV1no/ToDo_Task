@@ -18,9 +18,6 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     public virtual async Task<List<T>> All()
         => await _dbSet.ToListAsync();
 
-    // public async Task<Paging<T>> GetList(GridifyQuery query)
-    //     => await _dbSet.GridifyAsync(query);
-
 
     public virtual async Task<T?> GetById(int id)
         => await _dbSet.FindAsync(id);
